@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.security.spec.KeySpec;
+import java.text.Normalizer;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
@@ -64,6 +65,16 @@ public class Toolkit
     {
 	return System.getProperty("line.separator");
     }
+    
+    public static String urlize(String input) {
+   	String t = normalizeString(input).trim().toLowerCase().replaceAll(" ", "-").replaceAll("[^a-z0-9]", "-").replaceAll("-+", "-").replaceAll("-$", "");
+   	if (t.length() > 59) return t.substring(0, 58); else return t;
+    }
+     
+    public static String normalizeString(String input) {
+	 return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+   }
+    
     public static String xmlToString(Document document, boolean indent) throws Exception
     {
 	if (document == null) {
