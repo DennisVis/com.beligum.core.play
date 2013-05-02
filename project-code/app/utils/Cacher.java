@@ -79,10 +79,51 @@ import play.mvc.Http;
 public class Cacher
 {
     //-----CONSTANTS-----
+    public static Key CURRENT_USER = new Key("cuser");
     public interface CacheKey
     {
 	public int hashCode();
 	public boolean equals(Object obj);
+    }
+    public class Key implements CacheKey
+    {
+	private Object key;
+	public Key(Object key)
+	{
+	    this.key = key;
+	}
+	@Override
+	public int hashCode()
+	{
+	    final int prime = 31;
+	    int result = 1;
+	    result = prime * result + getOuterType().hashCode();
+	    result = prime * result + ((key == null) ? 0 : key.hashCode());
+	    return result;
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+	    if (this == obj)
+		return true;
+	    if (obj == null)
+		return false;
+	    if (getClass() != obj.getClass())
+		return false;
+	    Key other = (Key) obj;
+	    if (!getOuterType().equals(other.getOuterType()))
+		return false;
+	    if (key == null) {
+		if (other.key != null)
+		    return false;
+	    } else if (!key.equals(other.key))
+		return false;
+	    return true;
+	}
+	private Cacher getOuterType()
+	{
+	    return Cacher.this;
+	}
     }
     
     /*

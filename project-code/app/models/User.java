@@ -141,7 +141,7 @@ public class User extends BasicModel implements Subject
     //-----FACTORY FUNCTIONS-----
     public static User getCurrentUser()
     {
-	return (User) Cacher.fetchSessionObject(Cacher.CacheKey.CURRENT_USER);
+	return (User) Cacher.fetchSessionObject(Cacher.CURRENT_USER);
     }
     
     //-----MANAGEMENT FUNCTIONS-----
