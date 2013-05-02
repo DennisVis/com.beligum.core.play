@@ -79,14 +79,10 @@ import play.mvc.Http;
 public class Cacher
 {
     //-----CONSTANTS-----
-    public enum CacheKey
+    public interface CacheKey
     {
-	LATEST_COMIC_IMAGE,
-	RANDOM_COMIC_IMAGE,
-	CURRENT_USER,
-	ACTIVE_BACKUP,
-	BACKEND_SESSION_ACTIVE,
-	BACKEND_SESSION_WRITING,
+	public int hashCode();
+	public boolean equals(Object obj);
     }
     
     /*
