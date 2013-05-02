@@ -26,6 +26,7 @@ public class User extends BasicModel implements Subject
 {
     //-----CONSTANTS-----
     private static final long serialVersionUID = 1L;
+    private static User CURRENT_USER_KEY = new User(-1l);
 
     //-----VARIABLES-----
     @Id
@@ -51,6 +52,18 @@ public class User extends BasicModel implements Subject
     @Transient
     private List<UserRole> cachedRoles = null;
     
+    
+    //-----CONSTRUCTORS-----
+    public User()
+    {
+	super();
+    }
+    public User(Long id)
+    {
+	this();
+	
+	this.id = id;
+    }
     
     //-----GETTERS/SETTERS-----
     public String getLogin()
@@ -141,7 +154,7 @@ public class User extends BasicModel implements Subject
     //-----FACTORY FUNCTIONS-----
     public static User getCurrentUser()
     {
-	return (User) Cacher.fetchSessionObject(Cacher.CURRENT_USER);
+	return (User) Cacher.fetchSessionObject(CURRENT_USER_KEY);
     }
     
     //-----MANAGEMENT FUNCTIONS-----

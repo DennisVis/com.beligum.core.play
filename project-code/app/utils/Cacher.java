@@ -79,53 +79,6 @@ import play.mvc.Http;
 public class Cacher
 {
     //-----CONSTANTS-----
-    public static Key CURRENT_USER = new Key("cuser");
-    public interface CacheKey
-    {
-	public int hashCode();
-	public boolean equals(Object obj);
-    }
-    public class Key implements CacheKey
-    {
-	private Object key;
-	public Key(Object key)
-	{
-	    this.key = key;
-	}
-	@Override
-	public int hashCode()
-	{
-	    final int prime = 31;
-	    int result = 1;
-	    result = prime * result + getOuterType().hashCode();
-	    result = prime * result + ((key == null) ? 0 : key.hashCode());
-	    return result;
-	}
-	@Override
-	public boolean equals(Object obj)
-	{
-	    if (this == obj)
-		return true;
-	    if (obj == null)
-		return false;
-	    if (getClass() != obj.getClass())
-		return false;
-	    Key other = (Key) obj;
-	    if (!getOuterType().equals(other.getOuterType()))
-		return false;
-	    if (key == null) {
-		if (other.key != null)
-		    return false;
-	    } else if (!key.equals(other.key))
-		return false;
-	    return true;
-	}
-	private Cacher getOuterType()
-	{
-	    return Cacher.this;
-	}
-    }
-    
     /*
      * This is both used as a prefix for the keys in the client side cache
      * and the keys in the server side cache to denote the corresponding
@@ -160,7 +113,7 @@ public class Cacher
     /**
      * Stores an object in the request cache
      */
-    public static void storeRequestObject(CacheKey key, Object value)
+    public static void storeRequestObject(Object key, Object value)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -181,7 +134,7 @@ public class Cacher
      * Fetches an object in the request cache.
      * If not present, it returns null.
      */
-    public static Object fetchRequestObject(CacheKey key)
+    public static Object fetchRequestObject(Object key)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -200,7 +153,7 @@ public class Cacher
      * This can be used to check if a key is present when we store a null object.
      * (to avoid entering an expensive routine that returns null ;-)
      */
-    public static boolean containsRequestObject(CacheKey key)
+    public static boolean containsRequestObject(Object key)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -219,7 +172,7 @@ public class Cacher
      * Stores an object in the session cache if such a cache is present (started before this call).
      * If not, it returns false.
      */
-    public static boolean storeSessionObject(CacheKey key, Object value)
+    public static boolean storeSessionObject(Object key, Object value)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -239,7 +192,7 @@ public class Cacher
      * If not, it returns false. The expiration date is the longest date (roughly, because of rough-grained control) this
      * value may survive in the session cache.
      */
-    public static boolean storeSessionObject(CacheKey key, Object value, Calendar expiration)
+    public static boolean storeSessionObject(Object key, Object value, Calendar expiration)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -264,7 +217,7 @@ public class Cacher
      * Fetches an object in the session cache if such a cache is present (started before this call).
      * If not initialized or not present, it returns null.
      */
-    public static Object fetchSessionObject(CacheKey key)
+    public static Object fetchSessionObject(Object key)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -283,7 +236,7 @@ public class Cacher
      * This can be used to check if a key is present when we store a null object.
      * (to avoid entering an expensive routine that returns null ;-)
      */
-    public static boolean containsSessionObject(CacheKey key)
+    public static boolean containsSessionObject(Object key)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -301,7 +254,7 @@ public class Cacher
     /**
      * Stores an object in the application cache
      */
-    public static void storeApplicationObject(CacheKey key, Object value)
+    public static void storeApplicationObject(Object key, Object value)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -320,7 +273,7 @@ public class Cacher
      * The expiration date is the longest date (roughly, because of rough-grained control)
      * this value may survive in the session cache.
      */
-    public static void storeApplicationObject(CacheKey key, Object value, Calendar expiration)
+    public static void storeApplicationObject(Object key, Object value, Calendar expiration)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -339,7 +292,7 @@ public class Cacher
      * Fetches an object in the application cache.
      * If not present, it returns null.
      */
-    public static Object fetchApplicationObject(CacheKey key)
+    public static Object fetchApplicationObject(Object key)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -358,7 +311,7 @@ public class Cacher
      * This can be used to check if a key is present when we store a null object.
      * (to avoid entering an expensive routine that returns null ;-)
      */
-    public static boolean containsApplicationObject(CacheKey key)
+    public static boolean containsApplicationObject(Object key)
     {
 	//before doing anything, check if there's a request available to store anything in
 	if (!hasContext()) {
@@ -409,16 +362,16 @@ public class Cacher
      * It contains a single entry for every scope. The values of 
      * these entries are another map, containing key/value entries for that scope
      */
-    private static Map<Scope, Map<UUID, Map<CacheKey, CacheValue>>> getMainCache()
+    private static Map<Scope, Map<UUID, Map<Object, CacheValue>>> getMainCache()
     {
-	Map<Scope, Map<UUID, Map<CacheKey, CacheValue>>> retVal = (Map<Scope, Map<UUID, Map<CacheKey, CacheValue>>>)Cache.get(SERVER_CACHE_MAP_KEY);
+	Map<Scope, Map<UUID, Map<Object, CacheValue>>> retVal = (Map<Scope, Map<UUID, Map<Object, CacheValue>>>)Cache.get(SERVER_CACHE_MAP_KEY);
 	
 	//bootstrap an empty cache if it's not present (eg. after a server reboot)
 	if (retVal==null) {
-	    retVal = new HashMap<Scope, Map<UUID, Map<CacheKey, CacheValue>>>();
-	    retVal.put(Scope.REQUEST, new HashMap<UUID, Map<CacheKey, CacheValue>>());
-	    retVal.put(Scope.SESSION, new HashMap<UUID, Map<CacheKey, CacheValue>>());
-	    retVal.put(Scope.APPLICATION, new HashMap<UUID, Map<CacheKey, CacheValue>>());
+	    retVal = new HashMap<Scope, Map<UUID, Map<Object, CacheValue>>>();
+	    retVal.put(Scope.REQUEST, new HashMap<UUID, Map<Object, CacheValue>>());
+	    retVal.put(Scope.SESSION, new HashMap<UUID, Map<Object, CacheValue>>());
+	    retVal.put(Scope.APPLICATION, new HashMap<UUID, Map<Object, CacheValue>>());
 	    
 	    //store our new cache in the Cache API
 	    Cache.set(SERVER_CACHE_MAP_KEY, retVal);
@@ -432,15 +385,15 @@ public class Cacher
     /*
      * Three helper methods that point to the respective cache maps
      */
-    private static Map<UUID, Map<CacheKey, CacheValue>> getMainRequestCache()
+    private static Map<UUID, Map<Object, CacheValue>> getMainRequestCache()
     {
 	return getMainCache().get(Scope.REQUEST);
     }
-    private static Map<UUID, Map<CacheKey, CacheValue>> getMainSessionCache()
+    private static Map<UUID, Map<Object, CacheValue>> getMainSessionCache()
     {
 	return getMainCache().get(Scope.SESSION);
     }
-    private static Map<UUID, Map<CacheKey, CacheValue>> getMainApplicationCache()
+    private static Map<UUID, Map<Object, CacheValue>> getMainApplicationCache()
     {
 	return getMainCache().get(Scope.APPLICATION);
     }
@@ -449,21 +402,21 @@ public class Cacher
      * for the current context. 
      * Note: these may return null when they were not initialized before
      */
-    private static Map<CacheKey, CacheValue> getCurrentRequestCache()
+    private static Map<Object, CacheValue> getCurrentRequestCache()
     {
-	Map<CacheKey, CacheValue> retVal = Cacher.getMainRequestCache().get(Cacher.getCurrentRequestKey());
+	Map<Object, CacheValue> retVal = Cacher.getMainRequestCache().get(Cacher.getCurrentRequestKey());
 	if (retVal==null) {
-	    retVal = new HashMap<CacheKey, CacheValue>();
+	    retVal = new HashMap<Object, CacheValue>();
 	    Cacher.getMainRequestCache().put(Cacher.getCurrentRequestKey(), retVal);
 	}
 	
 	return retVal;
     }
-    private static Map<CacheKey, CacheValue> getCurrentSessionCache()
+    private static Map<Object, CacheValue> getCurrentSessionCache()
     {
 	//TODO: check if this automatic initialization is ok
 	
-	Map<CacheKey, CacheValue> retVal = null;
+	Map<Object, CacheValue> retVal = null;
 	UUID currentSessionKey = Cacher.getCurrentSessionKey();
 	if (currentSessionKey!=null) {
 	    retVal = Cacher.getMainSessionCache().get(currentSessionKey);
@@ -487,19 +440,19 @@ public class Cacher
 		Cacher.getMainSessionCache().remove(newSessionId);
 	    }
 	    else {
-		retVal = new HashMap<CacheKey, CacheValue>();
+		retVal = new HashMap<Object, CacheValue>();
 		Cacher.getMainSessionCache().put(Cacher.getCurrentSessionKey(), retVal);
 	    }
 	}
 	
 	return retVal;
     }
-    private static Map<CacheKey, CacheValue> getCurrentApplicationCache()
+    private static Map<Object, CacheValue> getCurrentApplicationCache()
     {
-	Map<CacheKey, CacheValue> retVal = Cacher.getMainApplicationCache().get(Cacher.getCurrentApplicationKey());
+	Map<Object, CacheValue> retVal = Cacher.getMainApplicationCache().get(Cacher.getCurrentApplicationKey());
 	if (retVal==null) {
 	    Logger.debug("Initializing application cache...");
-	    retVal = new HashMap<CacheKey, CacheValue>();
+	    retVal = new HashMap<Object, CacheValue>();
 	    Cacher.getMainApplicationCache().put(Cacher.getCurrentApplicationKey(), retVal);
 	}
 	
@@ -540,7 +493,7 @@ public class Cacher
     /*
      * Next come two generic store/fetch routines so we can use them from every scope
      */
-    private static boolean storeObject(CacheKey key, Object value, Map<CacheKey, CacheValue> cache, Calendar expiration)
+    private static boolean storeObject(Object key, Object value, Map<Object, CacheValue> cache, Calendar expiration)
     {
 	boolean retVal = false;
 	
@@ -549,12 +502,12 @@ public class Cacher
 	    retVal = true;
 	}
 	else {
-	    Logger.warn("Received a request to store a value with an uninitialized cache. CacheKey: "+key);
+	    Logger.warn("Received a request to store a value with an uninitialized cache. Object: "+key);
 	}
 	
 	return retVal;
     }
-    private static Object fetchObject(CacheKey key, Map<CacheKey, CacheValue> cache)
+    private static Object fetchObject(Object key, Map<Object, CacheValue> cache)
     {
 	Object retVal = null;
 	
@@ -565,12 +518,12 @@ public class Cacher
 	    }
 	}
 	else {
-	    Logger.warn("Received a request to fetch a value with an uninitialized cache. CacheKey: "+key);
+	    Logger.warn("Received a request to fetch a value with an uninitialized cache. Object: "+key);
 	}
 	
 	return retVal;
     }
-    private static boolean containsObject(CacheKey key, Map<CacheKey, CacheValue> cache)
+    private static boolean containsObject(Object key, Map<Object, CacheValue> cache)
     {
 	boolean retVal = false;
 	
@@ -578,7 +531,7 @@ public class Cacher
 	    retVal = cache.containsKey(key);
 	}
 	else {
-	    Logger.warn("Received a request to check a cache key with an uninitialized cache. CacheKey: "+key);
+	    Logger.warn("Received a request to check a cache key with an uninitialized cache. Object: "+key);
 	}
 	
 	return retVal;
@@ -615,20 +568,20 @@ public class Cacher
     /*
      * Checks if we need to purge the cache and does it if we need to
      */
-    private static void checkPurgeCache(Map<Scope, Map<UUID, Map<CacheKey, CacheValue>>> mainCache)
+    private static void checkPurgeCache(Map<Scope, Map<UUID, Map<Object, CacheValue>>> mainCache)
     {	
 	Calendar now = Calendar.getInstance();
 	
 	Calendar purgeDeadline = (Calendar)Cache.get(SERVER_CACHE_STAMP_MAP_KEY);
 	//only check once every minute
 	if (purgeDeadline==null || purgeDeadline.getTime().before(now.getTime())) {
-	    for (Iterator<Map.Entry<Scope, Map<UUID, Map<CacheKey, CacheValue>>>> scopeCacheIt = mainCache.entrySet().iterator(); scopeCacheIt.hasNext(); ) {
-		Entry<Scope, Map<UUID, Map<CacheKey, CacheValue>>> scopeCacheEntry = scopeCacheIt.next();
-		for (Iterator<Map.Entry<UUID, Map<CacheKey, CacheValue>>> scopeEntriesIt = scopeCacheEntry.getValue().entrySet().iterator(); scopeEntriesIt.hasNext(); ) {
-		    Entry<UUID, Map<CacheKey, CacheValue>> scopeEntriesEntry = scopeEntriesIt.next();
+	    for (Iterator<Map.Entry<Scope, Map<UUID, Map<Object, CacheValue>>>> scopeCacheIt = mainCache.entrySet().iterator(); scopeCacheIt.hasNext(); ) {
+		Entry<Scope, Map<UUID, Map<Object, CacheValue>>> scopeCacheEntry = scopeCacheIt.next();
+		for (Iterator<Map.Entry<UUID, Map<Object, CacheValue>>> scopeEntriesIt = scopeCacheEntry.getValue().entrySet().iterator(); scopeEntriesIt.hasNext(); ) {
+		    Entry<UUID, Map<Object, CacheValue>> scopeEntriesEntry = scopeEntriesIt.next();
 		    boolean emptyBeforeCheck = scopeEntriesEntry.getValue().isEmpty();
-		    for (Iterator<Map.Entry<CacheKey, CacheValue>> cacheEntryIt = scopeEntriesEntry.getValue().entrySet().iterator(); cacheEntryIt.hasNext(); ) {
-			Entry<CacheKey, CacheValue> cacheEntry = cacheEntryIt.next();
+		    for (Iterator<Map.Entry<Object, CacheValue>> cacheEntryIt = scopeEntriesEntry.getValue().entrySet().iterator(); cacheEntryIt.hasNext(); ) {
+			Entry<Object, CacheValue> cacheEntry = cacheEntryIt.next();
 			if (cacheEntry.getValue().getExpirationStamp()!=null && cacheEntry.getValue().getExpirationStamp().before(now.getTime())) {
 			    cacheEntryIt.remove();
 			}
