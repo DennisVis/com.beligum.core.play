@@ -2,19 +2,19 @@ package utils;
 
 public class Settings
 {
-    //-----CONSTANTS-----
+    // -----CONSTANTS-----
 
-    //-----VARIABLES-----
+    // -----VARIABLES-----
     public static String supportEmail = play.Play.application().configuration().getString("cindi.supportEmail");
 
-    //-----CONSTRUCTORS-----
+    // -----CONSTRUCTORS-----
     public Settings()
     {
     }
 
-    //-----PUBLIC FUNCTIONS-----
+    // -----PUBLIC FUNCTIONS-----
 
-    //-----PROTECTED FUNCTIONS-----
+    // -----PROTECTED FUNCTIONS-----
 
-    //-----PRIVATE FUNCTIONS-----
+    // -----PRIVATE FUNCTIONS-----
 }

@@ -45,9 +45,10 @@ public class JavaEEBeanPersistAdapter extends BeanPersistAdapter
 	    Method[] methods = aClass.getMethods();
 	    boolean hasListener = false;
 	    for (Method m : methods) {
-		
-		//System.out.println("looking if method " + m.toString() + " has Annotation on it. ");
-		
+
+		// System.out.println("looking if method " + m.toString() +
+		// " has Annotation on it. ");
+
 		if (m.isAnnotationPresent(PrePersist.class)) {
 		    prePersistMap.put(aClass.getName(), m);
 		    hasListener = true;
@@ -85,7 +86,7 @@ public class JavaEEBeanPersistAdapter extends BeanPersistAdapter
     }
     @Override
     public boolean preInsert(BeanPersistRequest<?> request)
-    {	
+    {
 	getAndInvokeMethod(prePersistMap, request.getBean());
 	return super.preInsert(request);
     }

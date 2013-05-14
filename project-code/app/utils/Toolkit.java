@@ -27,7 +27,6 @@ import play.libs.Json;
 import play.libs.WS;
 import play.libs.WS.WSRequestHolder;
 
-
 public class Toolkit
 {
     // -----CONSTANTS-----
@@ -65,16 +64,22 @@ public class Toolkit
     {
 	return System.getProperty("line.separator");
     }
-    
-    public static String urlize(String input) {
-   	String t = normalizeString(input).trim().toLowerCase().replaceAll(" ", "-").replaceAll("[^a-z0-9]", "-").replaceAll("-+", "-").replaceAll("-$", "");
-   	if (t.length() > 59) return t.substring(0, 58); else return t;
+
+    public static String urlize(String input)
+    {
+	String t = normalizeString(input).trim().toLowerCase().replaceAll(" ", "-").replaceAll("[^a-z0-9]", "-").replaceAll("-+", "-")
+					 .replaceAll("-$", "");
+	if (t.length() > 59)
+	    return t.substring(0, 58);
+	else
+	    return t;
     }
-     
-    public static String normalizeString(String input) {
-	 return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
-   }
-    
+
+    public static String normalizeString(String input)
+    {
+	return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+    }
+
     public static String xmlToString(Document document, boolean indent) throws Exception
     {
 	if (document == null) {
@@ -125,7 +130,6 @@ public class Toolkit
 
     private static String cachedAllStatusesJS = null;
 
-   
     public static String getJsonContentType()
     {
 	return play.api.http.ContentTypeOf.contentTypeOf_JsValue(play.api.mvc.Codec.utf_8()).mimeType().get();
@@ -192,7 +196,7 @@ public class Toolkit
     public static String getNiceSize(long fileSize)
     {
 	String retVal = "";
-	
+
 	double fileSizeD = fileSize;
 	String fileSizeS;
 	String fileSizeEx;

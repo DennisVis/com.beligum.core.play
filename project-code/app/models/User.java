@@ -26,11 +26,11 @@ import be.objectify.deadbolt.core.models.Permission;
 @Table(name = "users")
 public class User extends BasicModel implements Subject
 {
-    //-----CONSTANTS-----
+    // -----CONSTANTS-----
     private static final long serialVersionUID = 1L;
     private static User CURRENT_USER_KEY = new User(-1l);
 
-    //-----VARIABLES-----
+    // -----VARIABLES-----
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -46,17 +46,14 @@ public class User extends BasicModel implements Subject
     private String lastName;
 
     private String email;
-    
+
     private Integer roleLevel;
-    
-    
-    //-----CACHE-----
+
+    // -----CACHE-----
     @Transient
     private List<UserRole> cachedRoles = null;
-   
-    
-    
-    //-----CONSTRUCTORS-----
+
+    // -----CONSTRUCTORS-----
     public User()
     {
 	super();
@@ -64,11 +61,11 @@ public class User extends BasicModel implements Subject
     public User(Long id)
     {
 	this();
-	
+
 	this.id = id;
     }
-    
-    //-----GETTERS/SETTERS-----
+
+    // -----GETTERS/SETTERS-----
     public String getLogin()
     {
 	return login;
@@ -124,13 +121,13 @@ public class User extends BasicModel implements Subject
     {
 	this.email = email;
     }
-    
+
     @Override
     public String getIdentifier()
     {
-        return email;
+	return email;
     }
-    
+
     public String getFullName()
     {
 	String full = "";
@@ -139,47 +136,47 @@ public class User extends BasicModel implements Subject
 	}
 	return full;
     }
-    
-    public void setRoleLevel(Integer level) {
+
+    public void setRoleLevel(Integer level)
+    {
 	this.roleLevel = level;
 	this.cachedRoles = null;
     }
-    
+
     @Override
     public List<? extends Role> getRoles()
     {
 	if (this.roleLevel == null) {
 	    this.roleLevel = UserRoles.GUEST_ROLE.getLevel();
 	}
-	if (this.cachedRoles==null) {
+	if (this.cachedRoles == null) {
 	    this.cachedRoles = UserRoles.forLevel(this.roleLevel);
 	}
-	
+
 	return this.cachedRoles;
     }
-    
-    public UserRole getRole() {
-	return (UserRole)this.getRoles().get(0);
+
+    public UserRole getRole()
+    {
+	return (UserRole) this.getRoles().get(0);
     }
-    
-  
-    
+
     @Override
     public List<? extends Permission> getPermissions()
     {
 	return Arrays.asList();
     }
-    
-    //-----FACTORY FUNCTIONS-----
+
+    // -----FACTORY FUNCTIONS-----
     public static User getCurrentUser()
     {
 	return UserManager.getCurrentUser();
     }
-    
-    //-----MANAGEMENT FUNCTIONS-----
+
+    // -----MANAGEMENT FUNCTIONS-----
     @Override
     public String toString()
     {
-	return this.getClass().getSimpleName()+" [id=" + id + ", login=" + login + "]";
+	return this.getClass().getSimpleName() + " [id=" + id + ", login=" + login + "]";
     }
 }

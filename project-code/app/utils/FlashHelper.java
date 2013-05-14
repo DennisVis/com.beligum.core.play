@@ -9,7 +9,7 @@ public class FlashHelper
     public static void addMessage(String message)
     {
 	Flash flash = Http.Context.current().flash();
-	
+
 	StringBuilder s = new StringBuilder();
 	String existing = "";
 	if (flash.get("message") != null) {
@@ -17,7 +17,7 @@ public class FlashHelper
 	}
 	s.append(existing);
 	String newText = "<p><strong>Warning</strong> - " + message + "</p>";
-	if (s.indexOf(newText)<0) {
+	if (s.indexOf(newText) < 0) {
 	    s.append(newText);
 	}
 	flash.put("message", s.toString());
@@ -26,7 +26,7 @@ public class FlashHelper
     public static void addError(String message)
     {
 	Flash flash = Http.Context.current().flash();
-	
+
 	StringBuilder s = new StringBuilder();
 	String existing = "";
 	if (flash.get("error") != null) {
@@ -34,7 +34,7 @@ public class FlashHelper
 	}
 	s.append(existing);
 	String newText = "<p><strong>Error</strong> - " + message + "</p>";
-	if (s.indexOf(newText)<0) {
+	if (s.indexOf(newText) < 0) {
 	    s.append(newText);
 	}
 	flash.put("error", s.toString());
@@ -43,7 +43,7 @@ public class FlashHelper
     public static void addSuccess(String message)
     {
 	Flash flash = Http.Context.current().flash();
-	
+
 	StringBuilder s = new StringBuilder();
 	String existing = "";
 	if (flash.get("success") != null) {
@@ -51,7 +51,7 @@ public class FlashHelper
 	}
 	s.append(existing);
 	String newText = "<p><strong>Info</strong> - " + message + "</p>";
-	if (s.indexOf(newText)<0) {
+	if (s.indexOf(newText) < 0) {
 	    s.append(newText);
 	}
 	flash.put("success", s.toString());

@@ -15,7 +15,7 @@ import play.db.ebean.Model;
 @MappedSuperclass
 public abstract class BasicModel extends Model
 {
-    //-----VARIABLES-----
+    // -----VARIABLES-----
     @Column(name = "created_at")
     protected Calendar createdAt;
     @Column(name = "updated_at")
@@ -29,7 +29,7 @@ public abstract class BasicModel extends Model
     @JoinColumn(name = "updated_by")
     protected User updatedBy;
 
-    //-----PUBLIC GETTERS/SETTERS-----
+    // -----PUBLIC GETTERS/SETTERS-----
     public Calendar getCreatedAt()
     {
 	return createdAt;
@@ -62,8 +62,8 @@ public abstract class BasicModel extends Model
     {
 	this.updatedBy = updatedBy;
     }
-    
-    //-----MANAGEMENT FUNCTIONS-----
+
+    // -----MANAGEMENT FUNCTIONS-----
     @PrePersist
     public void doPrePersist()
     {

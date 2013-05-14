@@ -70,8 +70,7 @@ public class UserRepository
     {
 	try {
 	    return Ebean.find(User.class).where().eq("email", email).findUnique();
-	}
-	catch (Exception e) {
+	} catch (Exception e) {
 	    Logger.error("Caught error while searching a user by login", e);
 	    throw new PersistenceException(e);
 	}
@@ -96,5 +95,5 @@ public class UserRepository
 	    throw new PersistenceException(e);
 	}
     }
-    
+
 }

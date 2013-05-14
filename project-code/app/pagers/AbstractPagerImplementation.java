@@ -20,8 +20,8 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
     private Integer pageSize;
     private List<Map<String, Object>> items;
     private com.avaje.ebean.Page<T> dbPage;
-    protected Map<String, Object > query; 
-    
+    protected Map<String, Object> query;
+
     // ------COINSTRUCTOR----------
     public AbstractPagerImplementation(com.avaje.ebean.PagingList<T> pagingList, Integer page, Map<String, Object> query)
     {
@@ -32,7 +32,7 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
 	this.totalPages = pagingList.getTotalPageCount();
 	this.dbPage = pagingList.getPage(page);
 	Logger.debug(pagingList.toString());
-	//Save all info and create a list of pages
+	// Save all info and create a list of pages
 	this.createList();
     }
 
@@ -40,13 +40,15 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
     {
 	return items;
     }
-    
-    public Integer getPageSize() {
+
+    public Integer getPageSize()
+    {
 	return pageSize;
     }
-    
+
     // Get the objects inside the selected page
-    public List<T> getPage() {
+    public List<T> getPage()
+    {
 	return dbPage.getList();
     }
 
@@ -81,19 +83,19 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
 		einde = totalPages;
 	    }
 	}
-	
+
 	// Every item has 3 keys:
-	//	caption: the caption to show
-	//	referencePage: the page the item is referencing
-	//	isCurrentpage: if the pag is the selected page
-	
+	// caption: the caption to show
+	// referencePage: the page the item is referencing
+	// isCurrentpage: if the pag is the selected page
+
 	// Go back to first page
 	Map<String, Object> item = new HashMap<String, Object>();
 	item.put("caption", "<<");
 	item.put("referencePage", 1);
 	item.put("isCurrentpage", false);
 	items.add(item);
-	
+
 	// Go back to previous page
 	item = new HashMap<String, Object>();
 	item.put("caption", "<");
@@ -104,7 +106,7 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
 	    item.put("referencePage", 1);
 	}
 	items.add(item);
-	
+
 	// All the numbered pages
 	for (Integer i = start; i <= einde; i++) {
 	    item = new HashMap<String, Object>();
@@ -117,7 +119,7 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
 	    }
 	    items.add(item);
 	}
-	
+
 	// Go to next page
 	item = new HashMap<String, Object>();
 	item.put("caption", ">");
@@ -128,7 +130,7 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
 	    item.put("referencePage", totalPages);
 	}
 	items.add(item);
-	
+
 	// Go to last page
 	item = new HashMap<String, Object>();
 	item.put("caption", ">>");
@@ -137,20 +139,21 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
 	items.add(item);
 
     }
-    
+
     // Render the complete pager
-    public String createHtml() {
+    public String createHtml()
+    {
 	StringBuilder pager = new StringBuilder();
 	pager.append("<div class='pagination'>");
 	pager.append("<ul>");
-	for (Map<String, Object> li: this.items) {
+	for (Map<String, Object> li : this.items) {
 	    pager.append(this.renderLI(li));
 	}
 	pager.append("</ul>");
 	pager.append("</div>");
 	return pager.toString();
     }
-    
+
     // Render one item of the pager
     private String renderLI(Map<String, Object> li)
     {
@@ -162,13 +165,13 @@ public abstract class AbstractPagerImplementation<T> implements PagerInterface
 	    page.append("</li>");
 	} else {
 	    page.append(">"); // End of li element
-	    page.append("<a href ='" + getUrl((Integer)li.get("referencePage")) + "'>" + li.get("caption") + "</a>");
+	    page.append("<a href ='" + getUrl((Integer) li.get("referencePage")) + "'>" + li.get("caption") + "</a>");
 	    page.append("</li>");
 	}
 
 	return page.toString();
     }
-    
+
     protected abstract String getUrl(Integer page);
 
 }

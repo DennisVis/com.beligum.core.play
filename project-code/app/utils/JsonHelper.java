@@ -45,7 +45,7 @@ public class JsonHelper
 	rootObject.put(key, object);
 	return rootObject;
     }
-    
+
     public static Map<String, Object> makeTapeObject(Form form)
     {
 	Map<String, Object> tape = JsonHelper.rootNode();
@@ -55,10 +55,10 @@ public class JsonHelper
 	addFormField(tape, form, "totalBytes");
 	addFormField(tape, form, "usedBytes");
 	addFormField(tape, form, "volumeId");
-	
+
 	return tape;
     }
-    
+
     private static Map<String, Object> addFormField(Map<String, Object> object, Form form, String key)
     {
 	object.put(key, form.field(key).value());

@@ -4,12 +4,12 @@ import be.objectify.deadbolt.core.models.Role;
 
 public class UserRole implements Role
 {
-    //-----VARIABLES-----
+    // -----VARIABLES-----
     private int level;
     private String name;
     private String description;
-    
-    //-----CONSTRUCTORS-----
+
+    // -----CONSTRUCTORS-----
     public UserRole(int level, String name, String description)
     {
 	this.level = level;
@@ -17,7 +17,7 @@ public class UserRole implements Role
 	this.description = description;
     }
 
-    //-----PUBLIC METHODS-----
+    // -----PUBLIC METHODS-----
     public int getLevel()
     {
 	return this.level;
@@ -31,9 +31,8 @@ public class UserRole implements Role
     {
 	return this.description;
     }
- 
-    
-    //-----MANAGEMENT FUNCTIONS-----
+
+    // -----MANAGEMENT FUNCTIONS-----
     @Override
     public int hashCode()
     {
