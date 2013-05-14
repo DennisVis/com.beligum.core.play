@@ -11,9 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import security.UserManager;
 import security.UserRole;
 import security.UserRoles;
 import utils.Cacher;
+import utils.DateTimeHelper;
 import utils.Toolkit;
 
 import be.objectify.deadbolt.core.models.Role;
@@ -51,6 +53,7 @@ public class User extends BasicModel implements Subject
     //-----CACHE-----
     @Transient
     private List<UserRole> cachedRoles = null;
+   
     
     
     //-----CONSTRUCTORS-----
@@ -88,9 +91,10 @@ public class User extends BasicModel implements Subject
     }
     public void setNewPassword(String password)
     {
-	this.password = ""; // BasicHelper.hash(password,
-			    // utils.DateTimeHelper.formatDate(this.created_at,
-			    // "dd/MM/yyyy"));
+	if (createdAt == null) {
+	    createdAt = DateTimeHelper.getCurrentTime();
+	}
+	this.password = UserManager.getPasswordForString(this, password);
     }
     public String getFirstName()
     {
@@ -136,15 +140,30 @@ public class User extends BasicModel implements Subject
 	return full;
     }
     
+    public void setRoleLevel(Integer level) {
+	this.roleLevel = level;
+	this.cachedRoles = null;
+    }
+    
     @Override
     public List<? extends Role> getRoles()
     {
+	if (this.roleLevel == null) {
+	    this.roleLevel = UserRoles.GUEST_ROLE.getLevel();
+	}
 	if (this.cachedRoles==null) {
 	    this.cachedRoles = UserRoles.forLevel(this.roleLevel);
 	}
 	
 	return this.cachedRoles;
     }
+    
+    public UserRole getRole() {
+	return (UserRole)this.getRoles().get(0);
+    }
+    
+  
+    
     @Override
     public List<? extends Permission> getPermissions()
     {
@@ -154,7 +173,7 @@ public class User extends BasicModel implements Subject
     //-----FACTORY FUNCTIONS-----
     public static User getCurrentUser()
     {
-	return (User) Cacher.fetchSessionObject(CURRENT_USER_KEY);
+	return UserManager.getCurrentUser();
     }
     
     //-----MANAGEMENT FUNCTIONS-----

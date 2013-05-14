@@ -12,7 +12,7 @@ object ApplicationBuild extends Build {
     javaCore,
     javaJdbc,
     javaEbean,
-     "be.objectify" %% "deadbolt-java" % "2.0-SNAPSHOT"
+    "be.objectify" %% "deadbolt-java" % "2.1-RC2"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(

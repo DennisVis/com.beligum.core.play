@@ -15,3 +15,8 @@ dist
 /.settings
 
 /.DS_Store
+.DS_Store
+/.gitignore
+.gitignore
+/project-code/.settings/org.scala-ide.sdt.core.prefs
+/project-code/.classpath

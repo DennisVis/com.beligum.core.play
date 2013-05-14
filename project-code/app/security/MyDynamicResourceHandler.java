@@ -1,13 +1,14 @@
 package security;
 
+import java.util.List;
+
 import models.User;
 import play.Logger;
 import play.mvc.Http;
-import be.objectify.deadbolt.java.DynamicResourceHandler;
-import be.objectify.deadbolt.java.DeadboltHandler;
-import be.objectify.deadbolt.core.DeadboltAnalyzer;
-import be.objectify.deadbolt.core.models.Permission;
+import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
+import be.objectify.deadbolt.java.DeadboltHandler;
+import be.objectify.deadbolt.java.DynamicResourceHandler;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -20,7 +21,12 @@ public class MyDynamicResourceHandler implements DynamicResourceHandler
 	
 	Subject roleHolder = deadboltHandler.getSubject(context);
 	
+	
+	
 	if (roleHolder != null && User.class.isAssignableFrom(roleHolder.getClass())) {
+	    List<? extends Role> roles = ((User)roleHolder).getRoles();
+	    UserRole role = UserRoles.forName(name);
+	    
 	    retVal = ((User)roleHolder).getRoles().contains(UserRoles.forName(name));
 	}
 	else if (roleHolder!=null) {

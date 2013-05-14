@@ -41,24 +41,25 @@ public class MyDeadboltHandler extends AbstractDeadboltHandler
 	return new MyDynamicResourceHandler();
     }
 
-    @Override
-    public Result onAccessFailure(Http.Context context,  String content)
+
+    public Result onAuthFailure(Http.Context context,  String content)
     {
 	Http.Context.current.set(context); // <-- this is needed to have a current Http.Context
-	
+	Result retVal = null;
 	// you can return any result from here - forbidden, etc
-	FlashHelper.addMessage("Please log in first");
+	FlashHelper.addError("Please log in first");
 	try {
-	    String redirect = "";
-	    if (context.request().method().equalsIgnoreCase("GET")) {
-		redirect = URLEncoder.encode(context.request().uri(), Charset.defaultCharset().name());
+	    String onAuthFailureUrl = (String) play.Play.application().configuration().getString("beligum.core.onAuthFailureUrl");
+	    if (onAuthFailureUrl != null) {
+		retVal = redirect(onAuthFailureUrl);
+	    } else {
+		retVal = unauthorized(views.html.defaultpages.unauthorized.render());
 	    }
-	    
-	    return ok("ok");
 	    //return redirect(controllers.routes.UserController.login(redirect));
-	} catch (UnsupportedEncodingException e) {
+	} catch (Exception e) {
 	    Logger.error("UnsupportedEncodingException", e);
-	   return internalServerError();
+	   retVal = internalServerError();
 	}
+	return retVal;
     }
 }

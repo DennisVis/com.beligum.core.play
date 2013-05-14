@@ -66,10 +66,10 @@ public class UserRepository
 	}
     }
 
-    public static User findByLogin(String login) throws PersistenceException
+    public static User findByEmail(String email) throws PersistenceException
     {
 	try {
-	    return Ebean.find(User.class).where().eq("login", login).findUnique();
+	    return Ebean.find(User.class).where().eq("email", email).findUnique();
 	}
 	catch (Exception e) {
 	    Logger.error("Caught error while searching a user by login", e);
