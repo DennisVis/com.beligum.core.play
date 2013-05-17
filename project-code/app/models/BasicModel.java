@@ -10,6 +10,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import play.db.ebean.Model;
 
 @MappedSuperclass
@@ -25,6 +27,7 @@ public abstract class BasicModel extends Model
     @JoinColumn(name = "created_by")
     protected User createdBy;
 
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "updated_by")
     protected User updatedBy;
@@ -46,6 +49,8 @@ public abstract class BasicModel extends Model
     {
 	this.updatedAt = updatedAt;
     }
+    
+    @JsonIgnore
     public User getCreatedBy()
     {
 	return createdBy;
@@ -54,6 +59,8 @@ public abstract class BasicModel extends Model
     {
 	this.createdBy = createdBy;
     }
+    
+    @JsonIgnore
     public User getUpdatedBy()
     {
 	return updatedBy;
