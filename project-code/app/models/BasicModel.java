@@ -13,6 +13,7 @@ import javax.persistence.PreUpdate;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import play.db.ebean.Model;
+import be.objectify.deadbolt.core.models.Subject;
 
 @MappedSuperclass
 public abstract class BasicModel extends Model
