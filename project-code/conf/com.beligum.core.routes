@@ -1,0 +1,2 @@
+GET     /assets/cache/*file         com.beligum.core.controllers.AssetPacker.servePackFile(file: String)
+GET     /assets/*file               com.beligum.core.controllers.Assets.at(path="/public", file)

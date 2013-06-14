@@ -1,4 +1,4 @@
-package utils;
+package com.beligum.core.utils;
 
 import play.mvc.Http;
 import play.mvc.Http.Flash;

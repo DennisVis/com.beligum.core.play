@@ -1,4 +1,4 @@
-package security;
+package com.beligum.core.login.security;
 
 import be.objectify.deadbolt.core.models.Role;
 

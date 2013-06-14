@@ -1,4 +1,4 @@
-package utils;
+package com.beligum.core.utils;
 
 import java.util.Calendar;
 import java.util.Date;

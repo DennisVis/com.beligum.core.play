@@ -1,4 +1,4 @@
-package models.repositories;
+package com.beligum.core.models.repositories;
 
 import java.util.List;
 
@@ -6,7 +6,9 @@ import javax.persistence.PersistenceException;
 
 import models.User;
 
+
 import play.Logger;
+
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.PagingList;

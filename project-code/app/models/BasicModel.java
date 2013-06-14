@@ -13,7 +13,7 @@ import javax.persistence.PreUpdate;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import play.db.ebean.Model;
-import be.objectify.deadbolt.core.models.Subject;
+import com.beligum.core.utils.DateTimeHelper;
 
 @MappedSuperclass
 public abstract class BasicModel extends Model
@@ -76,7 +76,7 @@ public abstract class BasicModel extends Model
     public void doPrePersist()
     {
 	if (createdAt == null) {
-	    createdAt = utils.DateTimeHelper.getCurrentTime();
+	    createdAt = DateTimeHelper.getCurrentTime();
 	}
 	if (createdBy == null) {
 	    createdBy = User.getCurrentUser();
@@ -85,7 +85,7 @@ public abstract class BasicModel extends Model
     @PreUpdate
     public void doPreUpdate()
     {
-	updatedAt = utils.DateTimeHelper.getCurrentTime();
+	updatedAt = DateTimeHelper.getCurrentTime();
 	updatedBy = User.getCurrentUser();
     }
 }

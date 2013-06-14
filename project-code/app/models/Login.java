@@ -1,9 +1,10 @@
 package models;
 
-import models.repositories.UserRepository;
+import com.beligum.core.models.repositories.UserRepository;
+
 import play.data.validation.Constraints.Required;
-import security.UserManager;
-import utils.FlashHelper;
+import com.beligum.core.login.security.UserManager;
+import com.beligum.core.utils.FlashHelper;
 
 public class Login
 {

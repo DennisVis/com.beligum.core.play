@@ -1,4 +1,4 @@
-package utils;
+package com.beligum.core.utils;
 
 public class FileJson
 {
