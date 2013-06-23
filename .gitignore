@@ -13,9 +13,3 @@ dist
 /.project
 /RUNNING_PID
 /.settings
-
-/.DS_Store
-.DS_Store
-/project-code/.settings/org.scala-ide.sdt.core.prefs
-/project-code/.classpath
-.target
