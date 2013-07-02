@@ -1,4 +1,4 @@
-package com.beligum.core.controllers;
+package com.beligum.core.utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -24,7 +24,6 @@ import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import com.beligum.core.utils.Cacher;
 import com.yahoo.platform.yui.compressor.CssCompressor;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 
@@ -448,8 +447,8 @@ public class AssetPacker extends Controller
     }
     private static String getPublicUrl(String filenameInAssetsDir)
     {
-	return com.beligum.core.controllers.routes.Assets.at(filenameInAssetsDir).url();
-	//return "/assets/" + filenameInAssetsDir;
+	//return com.beligum.core.controllers.routes.Assets.at(filenameInAssetsDir).url();
+	return "/assets/" + filenameInAssetsDir;
     }
     private static byte[] encodeGzip(String content) throws IOException
     {

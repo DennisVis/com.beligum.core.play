@@ -1,4 +1,4 @@
-package com.beligum.core.login.security;
+package com.beligum.core.utils.security;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -6,7 +6,6 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Map;
 
-import models.User;
 
 
 
@@ -15,7 +14,10 @@ import models.User;
 import play.Logger;
 import play.mvc.Http;
 import play.mvc.Result;
+
+import com.beligum.core.models.User;
 import com.beligum.core.utils.FlashHelper;
+
 import be.objectify.deadbolt.java.AbstractDeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
 import be.objectify.deadbolt.core.models.Subject;

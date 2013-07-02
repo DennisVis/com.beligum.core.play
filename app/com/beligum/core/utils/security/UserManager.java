@@ -1,4 +1,4 @@
-package com.beligum.core.login.security;
+package com.beligum.core.utils.security;
 
 import java.security.spec.KeySpec;
 import java.util.Calendar;
@@ -7,16 +7,17 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 
-import models.User;
 
 import org.apache.commons.codec.binary.Hex;
 
-import com.beligum.core.models.repositories.UserRepository;
 
 
 
 import play.Logger;
 import play.mvc.Http;
+
+import com.beligum.core.models.User;
+import com.beligum.core.repositories.UserRepository;
 import com.beligum.core.utils.DateTimeHelper;
 
 public class UserManager

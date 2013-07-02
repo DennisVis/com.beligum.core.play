@@ -1,4 +1,4 @@
-package models;
+package com.beligum.core.models;
 
 import java.util.Calendar;
 
@@ -10,9 +10,11 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import play.db.ebean.Model;
+
 import com.beligum.core.utils.DateTimeHelper;
 
 @MappedSuperclass

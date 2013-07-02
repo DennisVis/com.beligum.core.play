@@ -1,8 +1,9 @@
-package com.beligum.core.login.security;
+package com.beligum.core.utils.security;
 
 import java.util.List;
 
-import models.User;
+import com.beligum.core.models.User;
+
 
 
 

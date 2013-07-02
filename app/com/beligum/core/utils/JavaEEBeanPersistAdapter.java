@@ -1,4 +1,4 @@
-package com.beligum.core.models.adapters;
+package com.beligum.core.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

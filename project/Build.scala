@@ -17,12 +17,21 @@ object ApplicationBuild extends Build {
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
+  	organization := "com.beligum",
+  
     // Add your own project settings here    
     resolvers += Resolver.url("Objectify Play Repository", url("http://schaloner.github.com/releases/"))(Resolver.ivyStylePatterns),
-  	resolvers += Resolver.url("Objectify Play Snapshot Repository", url("http://schaloner.github.com/snapshots/"))(Resolver.ivyStylePatterns),   
+    resolvers += Resolver.url("Objectify Play Snapshot Repository", url("http://schaloner.github.com/snapshots/"))(Resolver.ivyStylePatterns),   
 
     publishArtifact in(Compile, packageDoc) := false,
-    ebeanEnabled := true  
+    sources in doc in Compile := List(),
+    
+    com.typesafe.sbteclipse.core.EclipsePlugin.EclipseKeys.skipParents in ThisBuild := false,
+    com.typesafe.sbteclipse.core.EclipsePlugin.EclipseKeys.withSource := true,
+    
+    //hmm, doesn't work, see https://groups.google.com/forum/#!topic/play-framework/k5MT68xFzDA
+    //routesImport ++= Seq("_root_.com.beligum._"),
+	templatesImport ++= Seq("java.util._", "com.beligum._")
   )
 
 }

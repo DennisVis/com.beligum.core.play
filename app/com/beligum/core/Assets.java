@@ -1,6 +1,7 @@
-package com.beligum.core.controllers;
+package com.beligum.core;
 
-import play.api.mvc.*;
+import play.api.mvc.Action;
+import play.api.mvc.AnyContent;
 
 public class Assets
 {

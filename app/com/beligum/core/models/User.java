@@ -1,4 +1,4 @@
-package models;
+package com.beligum.core.models;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,12 +13,13 @@ import javax.persistence.Transient;
 
 
 
-import com.beligum.core.login.security.UserManager;
-import com.beligum.core.login.security.UserRole;
-import com.beligum.core.login.security.UserRoles;
+
 import com.beligum.core.utils.Cacher;
 import com.beligum.core.utils.DateTimeHelper;
 import com.beligum.core.utils.Toolkit;
+import com.beligum.core.utils.security.UserManager;
+import com.beligum.core.utils.security.UserRole;
+import com.beligum.core.utils.security.UserRoles;
 
 import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;

@@ -1,4 +1,4 @@
-package com.beligum.core.login.security;
+package com.beligum.core.utils.security;
 
 import java.util.ArrayList;
 import java.util.Arrays;

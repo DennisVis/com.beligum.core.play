@@ -1,4 +1,4 @@
-package com.beligum.core.pagers;
+package com.beligum.core.utils.pagers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
