@@ -31,7 +31,7 @@ object ApplicationBuild extends Build {
     
     //hmm, doesn't work, see https://groups.google.com/forum/#!topic/play-framework/k5MT68xFzDA
     //routesImport ++= Seq("_root_.com.beligum._"),
-	templatesImport ++= Seq("java.util._", "com.beligum._")
+	templatesImport ++= Seq("com.beligum._")
   )
 
 }
