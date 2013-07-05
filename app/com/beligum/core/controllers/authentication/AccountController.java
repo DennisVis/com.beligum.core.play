@@ -42,7 +42,7 @@ public class AccountController extends Controller
 	if (UserRepository.UserCount() > 0) {
 	    return ok(com.beligum.core.views.html.account.template.render(AuthenticationController.login()));
 	} else {
-	    Html adminPassword = com.beligum.core.views.html.account.partial.adminpassword.render();
+	    Html adminPassword = com.beligum.core.views.html.account.partial.adminpassword.render(false);
 	    return ok(com.beligum.core.views.html.account.template.render(adminPassword));
 	}
     }
@@ -56,20 +56,25 @@ public class AccountController extends Controller
     {
 	return AuthenticationController.authenticate();
     }
-    
+
     public static Result createAdminPassword()
     {
+	Result retVal = ok(com.beligum.core.views.html.account.template.render(com.beligum.core.views.html.account.partial.adminpassword.render(true)));
 	if (UserRepository.UserCount() == 0) {
-	    String password = Form.form().bindFromRequest().get("password");
-	    User adminUser = new User();
-	    adminUser.setEmail("admin");
-	    adminUser.setNewPassword(password);
-	    adminUser.setFirstName("admin");
-	    adminUser.setRoleLevel(0);
-	    UserRepository.save(adminUser);
-	    
+	    String password = Form.form().bindFromRequest().get("password1");
+	    String password2 = Form.form().bindFromRequest().get("password2");
+	    if (password.equals(password2)) {
+		User adminUser = new User();
+		adminUser.setEmail("admin");
+		adminUser.setNewPassword(password);
+		adminUser.setFirstName("admin");
+		adminUser.setRoleLevel(0);
+		UserRepository.save(adminUser);
+		retVal = login();
+	    }
+
 	}
-	return login();
+	return retVal;
     }
 
     // -----PROTECTED FUNCTIONS-----
