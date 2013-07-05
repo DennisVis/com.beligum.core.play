@@ -88,6 +88,19 @@ public class UserRepository
 	    throw new PersistenceException(e);
 	}
     }
+    
+    public static int UserCount() throws PersistenceException
+    {
+	int totalNrOfRows = 0;
+	try {
+	    totalNrOfRows = Ebean.find(User.class).findRowCount();
+	    
+	} catch (Exception e) {
+	    Logger.error("Caught error while searching all users", e);
+	    throw new PersistenceException(e);
+	}
+	return totalNrOfRows;
+    }
 
     public static void refreshUser(User user) throws PersistenceException
     {

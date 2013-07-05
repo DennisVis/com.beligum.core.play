@@ -1,0 +1,3 @@
+->		/										com.beligum.core.account.Routes
+->		/assets									com.beligum.core.assets.Routes
+-> 		/accounts								com.beligum.core.usermanagment.Routes

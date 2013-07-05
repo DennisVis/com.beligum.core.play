@@ -1,0 +1,59 @@
+@(user: core.models.User)
+
+@helper.form(action = core.accounts.UrlResolver.getAccount().update(user.getId()), 'class -> "form-horizontal") {
+
+
+<div class="control-group">
+	<label class="control-label" for="email">Email</label>
+	<div class="controls">
+		<input type="text" id="email" name="email" placeholder="" value="@user.getEmail()">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="firstname">First Name</label>
+	<div class="controls">
+		<input type="text" id="firstname" name="firstname" placeholder="" value="@user.getFirstName()">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="lastname">Last Name</label>
+	<div class="controls">
+		<input type="text" id="lastname" name="lastname" placeholder="" value="@user.getLastName()">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="password">Password</label>
+	<div class="controls">
+		<input type="password" id="password" name="password" placeholder="" value="">
+		<span class="help-block">Leave empty if you do not want to change the password.</span>
+	</div>
+</div>
+
+
+<div class="control-group">
+	<label class="control-label" for="role">Role</label>
+	<div class="controls controls-row">
+		<select id="role" name="role">
+			@for(role <- core.utils.security.UserRoles.getAllRoles()) {
+				@if(core.models.User.getCurrentUser().getRole().getLevel() <= role.getLevel()) {
+				<option value="@role.getLevel()" @if(role.getLevel() == user.getRole().getLevel()) { selected} >@role.getName()</option>
+				}
+			}
+		</select>
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label"></label>
+	<div class="controls">
+		<button>Save</button>
+	</div>
+
+</div>
+
+
+
+} 

@@ -1,0 +1,54 @@
+@(loginForm: Form[core.data.Login])
+
+
+
+
+
+<div class="row-fluid">
+
+	<div id="flashmessages" class="span10 offset1">@com.beligum.core.views.html.general.messages()</div>
+
+	<div id="content">
+		@helper.form(action = core.accounts.UrlResolver.getAccount().authenticate(), 'class -> "form-horizontal") {
+		<div class="row">
+			<div class="offset2 span5">
+				<h1>Login</h1>
+
+
+				@if(loginForm.hasGlobalErrors()) {
+				<div class="alert">@for(error <- loginForm.globalErrors()) { @error.message() }</div>
+				}
+
+				<div class="control-group">
+					<label class="control-label" for="email">Email</label>
+					<div class="controls">
+						<input type="text" id="email" name="email" placeholder="" value="@loginForm.field("email").value()">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="password">Password</label>
+					<div class="controls">
+						<input type="password" id="password1" name="password" placeholder="" value="@loginForm.field("password").value()">
+					</div>
+				</div>
+
+
+				<div class="control-group">
+					<label class="control-label"></label>
+					<div class="controls">
+						<button class="btn">Login</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		}
+	</div>
+</div>
+
+
+
+
+

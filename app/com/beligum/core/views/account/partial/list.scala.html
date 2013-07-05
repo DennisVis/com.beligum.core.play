@@ -1,0 +1,42 @@
+@(pager: core.utils.pagers.UserPager)
+
+
+
+<div class="row">
+<div class="offset1 span10">
+
+<h1>Users</h1>
+
+<div class="row">
+	<div class="span10">
+	@if(pager != null) {
+		@Html(pager.createHtml())
+		}
+	</div>
+	<div class="span2">
+		<a class="btn pull-right" href="@core.accounts.UrlResolver.getAccount().create()">New User</a>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="span12">
+	<table class="table reservation-list">
+
+	<tr><th>Email</th><th>First Name</th><th>LastName</th><th>Role</th></tr>
+	@if(pager != null) {
+			@for(user <- pager.getPage()) {
+			<tr>
+				<td><a href="@core.accounts.UrlResolver.getAccount().edit(user.getId())">@user.getEmail()</a></td>
+				<td>@user.getFirstName()</td>
+				<td>@user.getLastName()</td>
+				<td>@user.getRoles().get(0).getName()</td>
+			</tr>
+			}
+	}
+	</table>
+	</div>
+</div>
+
+</div>
+</div>

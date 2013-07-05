@@ -1,0 +1,64 @@
+@()
+
+@helper.form(action = core.accounts.UrlResolver.getAccount().save(), 'class -> "form-horizontal")  {
+
+
+<div class="control-group">
+	<label class="control-label" for="email">Email</label>
+	<div class="controls">
+		<input type="text" id="email" name="email" placeholder="" value="">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="password1">Password</label>
+	<div class="controls">
+		<input type="text" id="password1" name="password1" placeholder="" value="">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="password2">Retype password</label>
+	<div class="controls">
+		<input type="text" id="password2" name="password2" placeholder="" value="">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="firstname">First Name</label>
+	<div class="controls">
+		<input type="text" id="firstname" name="firstname" placeholder="" value="">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="lastname">Last Name</label>
+	<div class="controls">
+		<input type="text" id="lastname" name="lastname" placeholder="" value="">
+	</div>
+</div>
+
+
+
+
+<div class="control-group">
+	<label class="control-label" for="role">Role</label>
+	<div class="controls controls-row">
+		<select id="role" name="role">
+			@for(role <- com.beligum.core.utils.security.UserRoles.getAllRoles()) {
+				<option value="@role.getLevel()">@role.getName()</option>
+			}
+		</select>
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label"></label>
+	<div class="controls">
+		<button>Save</button>
+	</div>
+
+</div>
+
+
+
+} 

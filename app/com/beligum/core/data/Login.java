@@ -5,10 +5,10 @@ package com.beligum.core.data;
 
 import play.data.validation.Constraints.Required;
 
+import com.beligum.core.accounts.UserManager;
 import com.beligum.core.models.User;
 import com.beligum.core.repositories.UserRepository;
 import com.beligum.core.utils.FlashHelper;
-import com.beligum.core.utils.security.UserManager;
 
 public class Login
 {

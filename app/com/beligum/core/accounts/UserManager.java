@@ -1,4 +1,4 @@
-package com.beligum.core.utils.security;
+package com.beligum.core.accounts;
 
 import java.security.spec.KeySpec;
 import java.util.Calendar;

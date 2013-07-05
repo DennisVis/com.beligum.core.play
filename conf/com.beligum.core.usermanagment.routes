@@ -1,0 +1,7 @@
+GET		/edit/:id			com.beligum.core.controllers.users.UserController.edit(id: Long)
+GET		/create				com.beligum.core.controllers.users.UserController.create()
+POST	/edit/:id			com.beligum.core.controllers.users.UserController.update(id: Long)
+POST	/create				com.beligum.core.controllers.users.UserController.save()
+
+GET		/					com.beligum.core.controllers.users.UserController.list(page: Integer ?= 1)
+GET		/:page				com.beligum.core.controllers.users.UserController.list(page: Integer)

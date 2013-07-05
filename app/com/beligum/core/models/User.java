@@ -14,10 +14,10 @@ import javax.persistence.Transient;
 
 
 
+import com.beligum.core.accounts.UserManager;
 import com.beligum.core.utils.Cacher;
 import com.beligum.core.utils.DateTimeHelper;
 import com.beligum.core.utils.Toolkit;
-import com.beligum.core.utils.security.UserManager;
 import com.beligum.core.utils.security.UserRole;
 import com.beligum.core.utils.security.UserRoles;
 

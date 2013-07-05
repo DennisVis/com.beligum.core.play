@@ -1,0 +1,5 @@
+GET		/login				com.beligum.core.controllers.authentication.AccountController.login()
+POST	/login				com.beligum.core.controllers.authentication.AccountController.authenticate()
+GET		/logout				com.beligum.core.controllers.authentication.AccountController.logout()
+POST	/adminpassword		com.beligum.core.controllers.authentication.AccountController.createAdminPassword()
+

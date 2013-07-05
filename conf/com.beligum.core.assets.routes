@@ -1,0 +1,1 @@
+GET     /core/*file				com.beligum.core.Assets.at(path="/public/com/beligum/core", file)
