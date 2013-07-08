@@ -18,6 +18,7 @@
  *******************************************************************************/
 package com.beligum.core.controllers.authentication;
 
+import play.Play;
 import play.api.templates.Html;
 import play.data.Form;
 import play.mvc.Controller;
@@ -39,7 +40,8 @@ public class AccountController extends Controller
 
     public static Result login()
     {
-	if (UserRepository.UserCount() > 0) {
+	
+	if (UserRepository.RootExists()) {
 	    return ok(com.beligum.core.views.html.account.template.render(AuthenticationController.login()));
 	} else {
 	    Html adminPassword = com.beligum.core.views.html.account.partial.adminpassword.render(false);
@@ -60,7 +62,7 @@ public class AccountController extends Controller
     public static Result createAdminPassword()
     {
 	Result retVal = ok(com.beligum.core.views.html.account.template.render(com.beligum.core.views.html.account.partial.adminpassword.render(true)));
-	if (UserRepository.UserCount() == 0) {
+	if (!UserRepository.RootExists()) {
 	    String password = Form.form().bindFromRequest().get("password1");
 	    String password2 = Form.form().bindFromRequest().get("password2");
 	    if (password.equals(password2)) {

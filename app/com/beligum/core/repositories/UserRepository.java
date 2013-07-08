@@ -30,6 +30,7 @@ import play.Logger;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.PagingList;
 import com.beligum.core.models.User;
+import com.beligum.core.utils.security.UserRoles;
 
 public class UserRepository
 {
@@ -105,6 +106,21 @@ public class UserRepository
 	    Logger.error("Caught error while searching all users", e);
 	    throw new PersistenceException(e);
 	}
+    }
+    
+    public static boolean RootExists() throws PersistenceException
+    {
+	boolean retVal = true; 
+	try {
+	    int rootUserCount = Ebean.find(User.class).where().eq("roleLevel", UserRoles.ROOT_ROLE.getLevel()).findRowCount();
+	    if (rootUserCount == 0) {
+		retVal = false;
+	    }
+	} catch (Exception e) {
+	    Logger.error("Caught error while searching all users", e);
+	    throw new PersistenceException(e);
+	}
+	return retVal;
     }
     
     public static int UserCount() throws PersistenceException
